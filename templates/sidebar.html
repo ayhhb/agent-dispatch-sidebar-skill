@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Dispatch</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background: #0d1117;
+      color: #eef2f7;
+    }
+    body {
+      margin: 0;
+      padding: 18px;
+      background: #0d1117;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .count {
+      color: #8b949e;
+      font-size: 12px;
+    }
+    .task {
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #161b22;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .agent {
+      color: #58a6ff;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    .name {
+      margin-top: 5px;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    .status {
+      color: #8b949e;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .bar {
+      height: 6px;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+      background: #30363d;
+    }
+    .fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2ea043, #58a6ff);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Agent 调度</h1>
+    <span class="count" id="count"></span>
+  </header>
+  <main id="tasks"></main>
+  <script>
+    const TASKS = [
+      { agent: 'hermes', name: '检索英文资料并整理摘要', p: 88, s: 'running', t: '12:00' },
+      { agent: 'codex', name: '生成侧边栏应用模板', p: 100, s: 'done', t: '12:08' },
+      { agent: 'video', name: '等待素材确认', p: 32, s: 'queued', t: '12:15' }
+    ];
+
+    document.getElementById('count').textContent = `${TASKS.length} tasks`;
+    document.getElementById('tasks').innerHTML = TASKS.map((task) => `
+      <section class="task">
+        <div class="row">
+          <div>
+            <div class="agent">${task.agent}</div>
+            <div class="name">${task.name}</div>
+          </div>
+          <div class="status">${task.s} · ${task.t}</div>
+        </div>
+        <div class="bar"><div class="fill" style="width:${task.p}%"></div></div>
+      </section>
+    `).join('');
+  </script>
+</body>
+</html>
